@@ -12,4 +12,7 @@
   <ItemGroup>
     <Compile Include="connectKraken.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="config.xml" />
+  </ItemGroup>
 </Project>
