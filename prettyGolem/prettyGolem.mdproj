@@ -9,7 +9,4 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Default|AnyCPU' ">
     <OutputPath>.\</OutputPath>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="Startup.cs" />
-  </ItemGroup>
 </Project>
