@@ -8,11 +8,14 @@ using Microsoft.AspNetCore.Builder;
 
 namespace app
 {
-    public class start
-    {
-        public void Configure(IApplicationBuilder app)
-        {
-            //stuff goes here
-        }
-    }
+	private readonly IWebHostEnvironment _env;
+
+	public Startup(IConfiguration configuration, IWebHostEnvironment env)
+	{
+		Configuration = configuration;
+		_env = env;
+	}
+
+	public IConfiguration Configuration { get; }
+
 }
