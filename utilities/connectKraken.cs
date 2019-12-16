@@ -11,14 +11,23 @@ using Kraken.Net;
 
 namespace krakenAPI
 {
-    public class krakenUtils
+    public class KrakenUtils
 	{
-        public void ethGetPrice()
+        public string ConnectKraken()
+        { 
+            string abc = "abc";
+            return abc;
+        }
+
+        public void EthGetPrice()
 		{
-			//var ticker = client.GetTicker(new List<string> { "ETHUSD" });
-			//Console.WriteLine("");
-            //KrakenClient client = client.Ping
-		}
+            //var ticker = client.GetTicker(new List<string> { "ETHUSD" });
+            //Console.WriteLine("");
+            //_ = new KrakenClient();
+
+            
+            
+        }
 
 	}
 

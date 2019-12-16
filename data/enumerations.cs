@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace crytpoEnums
 {
 
-	enum leverage
+	public enum Leverage
 	{
 		zero = 0,
 		one = 1,
@@ -17,21 +17,21 @@ namespace crytpoEnums
 		five = 5,
 	}
 
-	enum crytoType
+	public enum CrytoType
 	{
 		Bitcoin = 0,
 		Ethereum = 1,
 		Ripple = 2,
-		Monero = 3,
+        Monero = 3,
 	}
 
-	enum orderType
-	{
-		buy = 0,
+    public enum OrderType
+    {
+        buy = 0,
 		sell = 1,
 	}
 
-	enum fiatType
+	public enum FiatType
 	{
 		USD = 0,
 		EUR = 1,

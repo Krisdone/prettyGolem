@@ -48,7 +48,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Startup.cs" />
+    <Compile Include="IWebHostEnvironment.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\utilities\utilities.csproj">
+      <Project>{DCB35A22-8646-4303-AFEB-4F7D3A5A5EE0}</Project>
+      <Name>utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
