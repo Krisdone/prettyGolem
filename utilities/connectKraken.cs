@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Kraken.Net;
+using crytpoEnums;
 
 namespace krakenAPI
 {
@@ -15,20 +16,33 @@ namespace krakenAPI
 	{
         public string ConnectKraken()
         { 
-            string abc = "abc";
-            return abc;
+            return "";
         }
 
-        public void EthGetPrice()
-		{
+        public string CloseKraken()
+        {
+            return "";
+        }
+
+        public int GetFiateBalance(FiatType Ftype)
+
+        {
             //var ticker = client.GetTicker(new List<string> { "ETHUSD" });
             //Console.WriteLine("");
             //_ = new KrakenClient();
-
-            
-            
+            return 0;
         }
 
-	}
+        public int GetCyrptoPrice(CrytoType Ctype)
+        {
+            return 0;
+        }
+
+        public int GetCurrentVWAP(CrytoType Ctype, FiatType Ftype)
+        {
+            return 0;
+        }
+
+    }
 
 }

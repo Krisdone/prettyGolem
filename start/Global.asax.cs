@@ -20,7 +20,7 @@ namespace start
             }
             else
             {
-                Console.WriteLine("Connected, now populating data.");
+                Console.WriteLine("Connected");
                 
             }
 

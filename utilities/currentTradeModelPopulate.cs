@@ -9,15 +9,18 @@ namespace populateTradingDetails
 {
     public class PopulateTradingDetails
     {
+        readonly KrakenUtils _KrakenUtils = new KrakenUtils();
 
-        public TradeModel PopulateTM()
+        public TradeModel PopulateTM(CrytoType Ctype, FiatType Ftype)
         {
             TradeModel x = new TradeModel
             {
                 TimeLoaded = DateTime.Now,
-                USDBalance = ,
-                EthCurrentPrice = ,
-                VWAPCurrentPrice = ,
+                Fiate = Ftype.ToString(),
+                FiateBalance = _KrakenUtils.GetFiateBalance(Ftype),
+                Crypto = Ctype.ToString(),
+                CryptoCurrentPrice = _KrakenUtils.GetCyrptoPrice(Ctype),
+                VWAPCurrentPrice = _KrakenUtils.GetCurrentVWAP(Ctype, Ftype),
                 Trigger = false
                 // trade details array gets populated when trade has been decided
             };
@@ -25,16 +28,16 @@ namespace populateTradingDetails
             return x;
         }
 
-        public TradeDetails PopluateTD()
+        public TradeDetails PopluateTD(CrytoType Ctype, FiatType Ftype, Leverage Ltype)
         {
             TradeDetails y = new TradeDetails()
             {
                 TradeNumber = , // starts from 1
                 TimeTradedOpened = ,
                 TimeTradedClosed = ,
-                Direction = ,
-                CType =
-                // leverage logic TBC
+                Direction = Ftype,
+                CType = Ctype,
+                Leverage = Ltype
             };
             
             return y;
