@@ -15,8 +15,9 @@ namespace krakenAPI
     public class KrakenUtils
 	{
         private readonly KrakenClient x = new KrakenClient();
-        private readonly WebConfigurationManager key = WebConfigurationManager.GetSection("KrakenKey") as WebConfigurationManager;
-        private readonly WebConfigurationManager secret = WebConfigurationManager.GetSection("KrakenSecret") as WebConfigurationManager;
+        private readonly string key = WebConfigurationManager.GetSection("KrakenKey") as string;
+        private readonly string secret = WebConfigurationManager.GetSection("KrakenSecret") as string;
+
 
         public string PingKraken()
         {
@@ -25,10 +26,14 @@ namespace krakenAPI
 
         }
 
+        public void SetAPICredentials()
+        {
+            x.SetApiCredentials(key, secret);
+        }
+
         public int GetFiatBalance(FiatType Ftype)
 
         {
-            x.SetApiCredentials(key, secret);
             return 0;
         }
 
