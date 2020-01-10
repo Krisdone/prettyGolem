@@ -37,7 +37,7 @@ namespace Chaos
                 while (string.IsNullOrEmpty(x.TimeTradedClosed.ToString())) {
                     // check trade status every 30 seconds
                     // if it is closed populate TD model
-                    //null out all TM values and call ChaosData()
+                    // null out all TM values and call ChaosData()
                 }
             }
         }

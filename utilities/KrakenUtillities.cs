@@ -18,21 +18,19 @@ namespace krakenAPI
         private readonly string key = WebConfigurationManager.GetSection("KrakenKey") as string;
         private readonly string secret = WebConfigurationManager.GetSection("KrakenSecret") as string;
 
-
         public string PingKraken()
         {
             var y = x.Ping();
+            SetAPICredentials();
             return String.IsNullOrEmpty(y.Error.ToString()) && y.Success.Equals("true") ?  "": y.Error.ToString();
-
         }
 
-        public void SetAPICredentials()
+        private void SetAPICredentials()
         {
             x.SetApiCredentials(key, secret);
         }
 
-        public int GetFiatBalance(FiatType Ftype)
-
+        public int GetFiateBalance(FiatType Ftype)
         {
             return 0;
         }
@@ -56,7 +54,5 @@ namespace krakenAPI
         {
             return DateTime.Now;
         }
-
     }
-
 }

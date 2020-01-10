@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-
-<appSettings>
-      <add key="KrakenBaseAddress" value="https://api.kraken.com"/>
-      <add key="KrakenApiVersion" value="0"/>
-      <add key="KrakenKey" value=" YOUR KRAKEN KEY"/>
-      <add key="KrakenSecret" value="YOUR KRAKEN SECRET"/>
-</appSettings>
