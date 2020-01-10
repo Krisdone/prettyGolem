@@ -23,9 +23,9 @@ namespace start
                 }
                 else
                 {
-                    //Console.WriteLine("Kraken is online, calling chaos module.");
-                    //new Chaost().ChaosData();
                     Console.WriteLine("Kraken is online and credentials are set.");
+                    Console.WriteLine("Calling Chaos Module.");
+                    new Chaost().ChaosData();
                 }
 
             } catch(Exception e) // TODO: add text functionality (or iMessage preferably) with why it errored.

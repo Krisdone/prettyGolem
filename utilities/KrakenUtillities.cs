@@ -8,6 +8,7 @@
 using System;
 using Kraken.Net;
 using crytpoEnums;
+using System.Configuration;
 using System.Web.Configuration;
 
 namespace krakenAPI
