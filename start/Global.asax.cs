@@ -1,6 +1,7 @@
-﻿using System.Web;
-using System;
+﻿using System;
+using System.Web;
 using krakenAPI;
+using Chaos;
 
 namespace start
 {
@@ -11,17 +12,17 @@ namespace start
 
             Console.WriteLine("Attempting to connect to https://api.kraken.com");
 
-            var c = new KrakenUtils().ConnectKraken();
+            var c = new KrakenUtils().PingKraken();           
 
-            if (c.Equals(""))
+            if (!c.Equals(""))
             {
                 Console.WriteLine(c);
                 // TODO add text functionality (or iMessage preferably) with why it errored.
             }
             else
             {
-                Console.WriteLine("Connected");
-                
+                Console.WriteLine("Kraken is online, calling chaos module.");
+                new Chaost().ChaosData();
             }
 
         }

@@ -55,6 +55,10 @@
       <Project>{DCB35A22-8646-4303-AFEB-4F7D3A5A5EE0}</Project>
       <Name>utilities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\modules\modules.csproj">
+      <Project>{BDDD7FE7-3C67-4243-8AA6-A6920612A13D}</Project>
+      <Name>modules</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

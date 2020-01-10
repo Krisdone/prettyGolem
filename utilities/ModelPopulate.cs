@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using krakenAPI;
 using currentTradeModel;
 using crytpoEnums;
@@ -11,16 +10,16 @@ namespace populateTradingDetails
     {
         readonly KrakenUtils _KrakenUtils = new KrakenUtils();
 
-        public TradeModel PopulateTM(CrytoType Ctype, FiatType Ftype)
+        public TradeModel PopulateTM(CrytoType Ctype, FiatType Ftype, TimeLine Tl)
         {
             TradeModel x = new TradeModel
             {
-                TimeLoaded = DateTime.Now,
+                TimeLoaded = DateTime.Now, 
                 Fiate = Ftype.ToString(),
                 FiateBalance = _KrakenUtils.GetFiateBalance(Ftype),
                 Crypto = Ctype.ToString(),
                 CryptoCurrentPrice = _KrakenUtils.GetCyrptoPrice(Ctype),
-                VWAPCurrentPrice = _KrakenUtils.GetCurrentVWAP(Ctype, Ftype),
+                VWAPCurrentPrice = _KrakenUtils.GetCurrentVWAP(Ctype, Ftype, Tl),
                 Trigger = false
                 // trade details array gets populated when trade has been decided
             };
@@ -32,10 +31,10 @@ namespace populateTradingDetails
         {
             TradeDetails y = new TradeDetails()
             {
-                TradeNumber = , // starts from 1
-                TimeTradedOpened = ,
-                TimeTradedClosed = ,
-                Direction = Ftype,
+                TradeNumber = _KrakenUtils.GetTradeID(), // starts from 1
+                TimeTradedOpened = _KrakenUtils.GetTradeDetails(),
+                TimeTradedClosed = _KrakenUtils.GetTradeDetails(),
+                Direction = OrderType.buy,
                 CType = Ctype,
                 Leverage = Ltype
             };

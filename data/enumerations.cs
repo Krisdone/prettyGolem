@@ -1,9 +1,4 @@
 ﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace crytpoEnums
 {
     public enum Leverage
@@ -34,5 +29,14 @@ namespace crytpoEnums
     {
         USD = 0,
         EUR = 1,
+    }
+
+    public enum TimeLine
+    {
+        fifteenMin = 0,
+        thirtyMin = 1,
+        oneHour = 2,
+        twoHour = 3,
+        fourHour = 4
     }
  }
