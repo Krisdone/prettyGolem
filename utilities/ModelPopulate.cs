@@ -8,17 +8,18 @@ namespace populateTradingDetails
 {
     public class PopulateTradingDetails
     {
-        readonly KrakenUtils _KrakenUtils = new KrakenUtils();
+        private readonly KrakenUtils _KrakenUtils = new KrakenUtils();
+        private readonly DateTime timestamp = DateTime.Now;
 
-        public TradeModel PopulateTM(CrytoType Ctype, FiatType Ftype, TimeLine Tl)
+        public TradeModel PopulateTM(CryptoType Ctype, FiatType Ftype, TimeLine Tl, XBTPossiblePairs Xtype, ETHPossiblePairs Etype)
         {
             TradeModel x = new TradeModel
             {
-                TimeLoaded = DateTime.Now, 
-                Fiate = Ftype.ToString(),
-                FiateBalance = _KrakenUtils.GetFiateBalance(Ftype),
-                Crypto = Ctype.ToString(),
-                CryptoCurrentPrice = _KrakenUtils.GetCyrptoPrice(Ctype),
+                TimeLoaded = timestamp,
+                Fiate = Ftype,
+                FiateBalance = _KrakenUtils.GetFiateBalance(FiatType.ZUSD), 
+                Crypto = Ctype,
+                CryptoCurrentPrice = _KrakenUtils.GetPossibleCyrptoTradeDetails(Ctype, Ftype, Xtype, Etype),
                 VWAPCurrentPrice = _KrakenUtils.GetCurrentVWAP(Ctype, Ftype, Tl),
                 Trigger = false
                 // trade details array gets populated when trade has been decided
@@ -27,7 +28,7 @@ namespace populateTradingDetails
             return x;
         }
 
-        public TradeDetails PopluateTD(CrytoType Ctype, FiatType Ftype, Leverage Ltype)
+        public TradeDetails PopluateTD(CryptoType Ctype, FiatType Ftype, Leverage Ltype)
         {
             TradeDetails y = new TradeDetails()
             {
@@ -40,7 +41,6 @@ namespace populateTradingDetails
             };
             
             return y;
-
         }
 
     }

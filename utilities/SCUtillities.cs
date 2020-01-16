@@ -2,7 +2,7 @@
  * https://sia.tech/docs/
  */
 
- //TODO: Integrate SC API for data storage.
+ //TODO: Integrate SC API for data storage with future AI support.
 
 namespace SC
 {

@@ -11,14 +11,15 @@ namespace crytpoEnums
         five = 5,
     }
 
-    public enum CrytoType
+    public enum CryptoType
     {
-        Bitcoin = 0,
-        Ethereum = 1,
-        Ripple = 2,
-        Monero = 3,
+        XXBT = 0,
+        XETH = 1
+        //XXRP = 2,
+        //XXMR = 3,
+        //XETC = 4
     }
-    
+
     public enum OrderType
     {
         buy = 0,
@@ -27,8 +28,7 @@ namespace crytpoEnums
     
     public enum FiatType
     {
-        USD = 0,
-        EUR = 1,
+        ZUSD = 0
     }
 
     public enum TimeLine
@@ -39,4 +39,19 @@ namespace crytpoEnums
         twoHour = 3,
         fourHour = 4
     }
- }
+
+    public enum XBTPossiblePairs
+    {
+        ZUSD = 0,
+        XETH = 1,
+        XXRP = 2,
+        XETC = 3,
+        XXMR = 4
+    }
+
+    public enum ETHPossiblePairs
+    {
+        ZUSD = 0,
+        XETC = 1,
+    }
+}
