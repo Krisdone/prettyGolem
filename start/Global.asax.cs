@@ -13,7 +13,6 @@ namespace start
             try
             {
                 var timestamp = DateTime.Now;
-                Console.WriteLine("Attempting to connect to https://api.kraken.com @: " + timestamp + ".");
                 var c = new KrakenUtils().PingKraken();
 
                 if (!c.Equals(""))
@@ -24,14 +23,15 @@ namespace start
                 }
                 else
                 {
-                    Console.WriteLine("Kraken is online.");
-                    Console.WriteLine("Calling Chaos Module.");
                     new Chaost().ChaosData();
+                    Thread.Sleep(5050);
+                    Application_Start();
                 }
 
             } catch(Exception e) // TODO: add text functionality (or iMessage preferably) with why it errored ...
             {
                 Console.WriteLine(e);
+                Thread.Sleep(5050);
                 Application_Start();
             }
         }

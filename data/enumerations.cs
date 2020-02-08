@@ -8,22 +8,19 @@ namespace crytpoEnums
         two = 2,
         three = 3,
         four = 4,
-        five = 5,
+        five = 5
     }
 
     public enum CryptoType
     {
         XXBT = 0,
         XETH = 1
-        //XXRP = 2,
-        //XXMR = 3,
-        //XETC = 4
     }
 
-    public enum OrderType
+    public enum OrderSide
     {
         buy = 0,
-        sell = 1,
+        sell = 1
     }
     
     public enum FiatType
@@ -46,12 +43,15 @@ namespace crytpoEnums
         XETH = 1,
         XXRP = 2,
         XETC = 3,
-        XXMR = 4
+        XXMR = 4,
+        XREP = 5,
+        BCH = 6
     }
 
     public enum ETHPossiblePairs
     {
         ZUSD = 0,
         XETC = 1,
+        XREP = 2
     }
 }

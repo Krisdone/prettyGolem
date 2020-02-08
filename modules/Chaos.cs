@@ -11,39 +11,14 @@ namespace Chaos
 
         public int Chaosify(int x)
         {
-            return new Random().Next(0, x);
+            return new Random().Next(0, x + 1);
         }
 
         public void ChaosData()
         {
-            //TODO: Dynamically populate off what Kraken returns but for now I be hardcoding meh...
-            // ^ Could potentially have problems with request allowance but wont know for sure unless I try...
-            // The data I get back in my output is honestly too much and I need to clean it up coherently.
-
             int CTypeRand = Chaosify(Enum.GetValues(typeof(CryptoType)).Cast<int>().Max());
-
-            //if (CTypeRand.Equals((int)CryptoType.XXMR) || CTypeRand.Equals((int)CryptoType.XETC) && FTypeRando.Equals((int)FiatType.ZUSD)) {
-            //   LTypeRando = Chaosify((int)Leverage.two);
-            //}
-            //else if (CTypeRand.Equals((int)CryptoType.XXBT)) {
-            //    if (FTypeRando.Equals((int)CryptoType.XXMR)) {
-            //        LTypeRando = Chaosify((int)Leverage.three); // double check value
-            //    } else if (FTypeRando.Equals((int)CryptoType.XETC) {
-            //        LTypeRando = Chaosify((int)Leverage.three); // double check value
-            //    } else {
-            //        
-            //    }
-            //} else if (CTypeRand.Equals((int)CryptoType.XETH)) {
-            //    LTypeRando =
-            //} else {
-            //    LTypeRando = Chaosify((int)Leverage.five);
-            //}
-
-            // Completely eraticate bias (almost) for loading your choice crypto enumerations, also my english is getting worse the more I learn German.
-            int FTypeRando = -1;
-            int Xtype = -1;
-            int Etype = -1;
-            int LTypeRando = Chaosify((int)Leverage.five);
+            int FTypeRando = -1; int Xtype = -1; int Etype = -1;
+            int LTypeRando = 2; //Chaosify((int)Leverage.five);
             
             if (CTypeRand.Equals((int)CryptoType.XXBT)) {
                 Xtype = Chaosify(Enum.GetValues(typeof(XBTPossiblePairs)).Cast<int>().Max());
@@ -53,28 +28,29 @@ namespace Chaos
                 FTypeRando = Chaosify(Enum.GetValues(typeof(FiatType)).Cast<int>().Max());
             }
 
-            int TlRando = Chaosify(Enum.GetValues(typeof(TimeLine)).Cast<int>().Max());
-
-            Console.WriteLine("Chaos module is attempting to populate the trading model.");
-
+            int TlRando = 2; // Hard coding 2 for now -> Chaosify(Enum.GetValues(typeof(TimeLine)).Cast<int>().Max());
             var TMModel = new PopulateTradingDetails().PopulateTM((CryptoType)CTypeRand, (FiatType)FTypeRando, (TimeLine)TlRando, (XBTPossiblePairs)Xtype, (ETHPossiblePairs) Etype);
+            var percentAverage = (TMModel.CryptoCurrentPrice - TMModel.VWAPCurrentAveragePrice) / TMModel.VWAPCurrentAveragePrice;
+            var percentShortTime = (TMModel.CryptoCurrentPrice - TMModel.VWAPCurrent24HRolling) / TMModel.VWAPCurrent24HRolling;
+            var percentBigTime = (TMModel.CryptoCurrentPrice - TMModel.VWAPCurrentDaily) / TMModel.VWAPCurrentDaily;
 
-            // This is where we say, "Get the data and set trigger for making a trade based on your criteria".
-            // Below I just use VWAP.
-            var percent = (TMModel.CryptoCurrentPrice - TMModel.VWAPCurrentPrice) / TMModel.VWAPCurrentPrice;
+            Console.Write(TMModel.TradePairName + ", percentAverage: " + (Math.Round(percentAverage, 6) * 100) + "%"
+                                                + ", percentShortTime: " + (Math.Round(percentShortTime, 6) * 100) + "%"
+                                                + ", percentBigTime: " + (Math.Round(percentBigTime, 6) * 100) + "%"
+                                                + "%, price: " + TMModel.CryptoCurrentPrice + ".\n");
 
-            if (TMModel.Trigger = percent >= .04 ? true : false) 
+            if (TMModel.Trigger = percentAverage >= 0.05m || percentAverage <= -0.5m  ? true : false) 
             {
-                // make the kraken trade with variables declared in chaos from utilities and populate model below
-                // set sell or buy order
-                // set sell or buy order
-                var x = new PopulateTradingDetails().PopluateTD((CryptoType)CTypeRand, (FiatType)FTypeRando, (Leverage)LTypeRando);
+                Console.WriteLine("Criteria met -> Choas module is attempting to trade:" + TMModel.TradePairName +  ".\n");
+                var x = new PopulateTradingDetails().PopluateTD(TMModel.TradePairName, (Leverage)LTypeRando, percentAverage, TMModel.CryptoCurrentPrice);
+                var timer = 0; var thirtySeconds = 30000; var sixHours = 21600000;
 
-                while (string.IsNullOrEmpty(x.TimeTradedClosed.ToString())) { //TODO: Goal is to get breakpoint getting here hit essentially.
-                    Thread.Sleep(30000);
-                    // if it is closed populate TD model
-                    // null out all TM values and call ChaosData()
+                while (string.IsNullOrEmpty(x.TimeTradedClosed.ToString())) { 
+                    Thread.Sleep(thirtySeconds);
+                    timer += thirtySeconds;
+                    var done = sixHours == timer ? 1 : 2 ; // TODO:goal to get here
                 }
+                ChaosData();
             }
         }
     }

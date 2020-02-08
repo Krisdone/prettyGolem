@@ -1,9 +1,10 @@
 ﻿/* helpfull API links below
  * https://www.kraken.com/features/api#example-api-code-cs
  * https://github.com/JKorf/Kraken.Net/blob/master/Kraken.Net/Kraken.Net.csproj
- * https://bitbucket.org/arrivets/krakenapi/src/master/README.txt
- * https://docs.microsoft.com/en-us/dotnet/standard/net-standard <-- helpfull chart of which .net frameworks support the other one *mind will explode*.
- */
+ * https://bitbucket.org/arrivets//src/master/README.txt
+ * https://docs.microsoft.com/en-us/dotnet/standard/net-standard <-- helpfull chart of which .net frameworks support the other ones *mind will explode*.
+ * https://stackoverflow.com/questions/48744124/getting-the-latest-pair-value-with-kraken-api
+*/
 
 using System;
 using System.Data;
@@ -11,50 +12,76 @@ using Kraken.Net;
 using crytpoEnums;
 using System.Configuration;
 using System.Web.Configuration;
+using System.Collections.Generic;
+using System.IO;
 
 namespace krakenAPI
 {
     public class KrakenUtils
 	{
         private readonly KrakenClient x = new KrakenClient();
-        private readonly key = "";
-        private readonly secret = "";
+        private string _key;
+        private string _secret;
+        private string _path = "/Users/Kris/Projects/prettyGolem/utilities";
+        private readonly string key = "yourKeyHere";
+        private readonly string secret = "yourSecretHere";
 
+        public void SetCredentials()
+        {
+            var webConfigurationFileMap = new WebConfigurationFileMap();           
+            webConfigurationFileMap.VirtualDirectories.Add(_path, new VirtualDirectoryMapping(_path, isAppRoot: true));           
+            var webConfig = WebConfigurationManager.OpenMappedWebConfiguration(webConfigurationFileMap, string.Empty);
+
+            var map = new ExeConfigurationFileMap { ExeConfigFilename = @_path};
+            var configfile = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);
+            var test = WebConfigurationManager.AppSettings[""];
+            var a = webConfig.GetSection("appSettings");
+            //TODO: get this working so I dont have to hardcode the key and secret...
+            //_secret = ConfigurationManager.AppSettings["KrakenSecret"];      
+        }
+            
         public string PingKraken()
         {
+            SetCredentials();
             var y = x.Ping();
-            return !y.Success.Equals("true") ? "": y.Error.ToString(); // TODO: It works but like wtf is happening here (sorry).
+            return !y.Success.Equals("true") ? "": y.Error.ToString();
         }
 
         public decimal GetFiateBalance(FiatType Ftype)
         {
+            //SetCredentials(); // var a = x.GetSymbols(); // Gets available trading pairs.
             x.SetApiCredentials(key, secret);
             return x.GetBalances().Data[Ftype.ToString()];
         }
 
-        public int GetPossibleCyrptoTradeDetails(CryptoType Ctype, FiatType Ftype, XBTPossiblePairs Xtype, ETHPossiblePairs Etype)
+        public decimal GetTradedPairPrice(string symbol)
         {
-            if (Etype.ToString() != "-1")
-            {
-                var a = x.GetSymbols().Data[Etype.ToString() + Ctype.ToString()];
-            } else if (Xtype.ToString() != "-1")
-            {
-                var b = x.GetSymbols().Data[Xtype.ToString() + Ctype.ToString()];
-            } else
-            {
-                var a = x.GetSymbols().Data[Ctype.ToString() + Ftype.ToString()];
-            }
-            return 0;
+            return x.GetTickers(new System.Threading.CancellationToken(), symbol).Data[symbol].Open;
         }
 
-        public int GetCurrentVWAP(CryptoType Ctype, FiatType Ftype, TimeLine Tl)
+        public decimal GetCurrentVWAPAverage(string symbol)
         {
-            return 0;
+            var a = x.GetTickers(new System.Threading.CancellationToken(), symbol).Data[symbol].VolumeWeightedAveragePrice.ValueToday;
+            var b = x.GetTickers(new System.Threading.CancellationToken(), symbol).Data[symbol].VolumeWeightedAveragePrice.Value24H;
+            return (a + b) / 2;
         }
 
-        public int GetTradeID()
+        public decimal GetCurrentVWAP24Hrolling(string symbol)
         {
-            return 0;
+            return x.GetTickers(new System.Threading.CancellationToken(), symbol).Data[symbol].VolumeWeightedAveragePrice.Value24H; ;
+        }
+ 
+        public decimal GetCurrentVWAPAverageValueToday(string symbol)
+        {
+            return x.GetTickers(new System.Threading.CancellationToken(), symbol).Data[symbol].VolumeWeightedAveragePrice.ValueToday;
+        }
+
+        public string MakeTrade(string TradedPairName, OrderSide Otype, decimal TradedPairPrice, decimal avilableFunds,
+            Leverage Ltype)
+        {
+            int volume = Convert.ToInt32(Math.Floor(avilableFunds / TradedPairPrice));
+            //x.PlaceOrder(TradedPairName, Otype, "limit", TradedPairPrice, volume, Ltype);
+            return "";
         }
 
         public DateTime GetTradeDetails()
